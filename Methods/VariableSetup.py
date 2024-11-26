@@ -20,7 +20,7 @@ class hole:
         self.pos_cg = (x_star, z_star)
     
     def find_r(self):
-        self.r = self.pos_cg
+        self.r = ( self.pos_cg[0] ** 2 + self.pos_cg[1] ** 2 ) ** (1/2)
 
     #find in-plane forces
     def p_i_computation(self, f_x, f_z, m_y, n_holes, hole_of_inertia):
@@ -68,5 +68,9 @@ hole_cg = find_hole_cg(holes)
 
 #calculate "sum (Ar^2)"
 def find_inertia(holes):
+    moment_of_inertia = 0
     for hole in holes:
-        hole.area * ( hole.r ** 2 )
+        moment_of_inertia += hole.area * ( hole.r ** 2 )
+    return moment_of_inertia
+
+hole_of_inertia = find_inertia(holes)
