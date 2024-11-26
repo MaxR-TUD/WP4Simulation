@@ -1,6 +1,7 @@
-import VariableSetup
+import VariableSetup as VS
 import math
-
+import pandas as pd
+import numpy as np
 
 def pull_push_check(hole, r_i=0, t2=0, t3=0):  # hole is a hole retard
     stress_t2 = 2 * hole.po / (math.pi * r_i * t2)  # [Pa]
@@ -9,6 +10,7 @@ def pull_push_check(hole, r_i=0, t2=0, t3=0):  # hole is a hole retard
 
 
 def bearing_check(hole, ):
+
 
     return
 
