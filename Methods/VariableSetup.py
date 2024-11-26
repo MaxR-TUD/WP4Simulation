@@ -1,7 +1,5 @@
 import math
 import numpy as np
-import pandas as pd
-
 
 class hole:
     def __init__(self, coord, diameter):
@@ -15,7 +13,7 @@ class hole:
         self.p_o = 0
 
     #find position of hole relative to cg
-    def find_pos_cg(self):
+    def find_pos_cg(self, hole_cg):
         z_star = (self.pos[1] - hole_cg[1])
         x_star = -1 * (self.pos[0] - hole_cg[0])
         self.pos_cg = (x_star, z_star)
@@ -30,8 +28,8 @@ class hole:
         p_m_y = m_y * self.area * self.r / hole_of_inertia
 
         #decomposing p_m_y and adding it to the component forces
-        if self.pos_cg[1] == 0:
-            p_x += p_m_y * np.sign(self.pos[1] - hole_cg[1])
+        if self.pos_cg[0] == 0:
+            p_x += p_m_y * np.sign(self.pos_cg[1])
         elif self.pos_cg[0] > 0:
             alpha = math.atan( self.pos_cg[1] / self.pos_cg[0] )
             p_x += p_m_y * math.sin(alpha)
@@ -63,7 +61,7 @@ def find_hole_cg(holes):
     hole_cg_z = hole_cg_z / total_area
     return (hole_cg_x, hole_cg_z)
 
-hole_cg = find_hole_cg(holes)
+# hole_cg = find_hole_cg(holes)
 
 #Count how many holes there are when reading from the txt file.
 
@@ -74,4 +72,4 @@ def find_inertia(holes):
         moment_of_inertia += hole.area * ( hole.r ** 2 )
     return moment_of_inertia
 
-hole_of_inertia = find_inertia(holes)
+# hole_of_inertia = find_inertia(holes)
