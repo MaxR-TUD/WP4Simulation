@@ -9,8 +9,8 @@ class hole:
         self.pos = coord #tuple in (x, z)
         self.dia = diameter
         self.area = (self.dia /2) **2 * math.pi
-        self.r = 0
-        self.pos_cg = 0 #tuple in (x*, z*)
+        self.pos_cg = 0 # position in relation with centroid #tuple in (x*, z*)
+        self.r = 0 # distance to centroid
         self.p_i = 0
         self.p_o = 0
 
