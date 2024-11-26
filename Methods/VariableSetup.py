@@ -46,7 +46,7 @@ class hole:
     #find out-out-plane forces
     def p_o_computation(self, f_y, m_z, n_holes, hole_of_inertia):
         p_o = f_y / n_holes
-        p_o += m_z * self.area * self.r / hole_of_inertia * np.sign(self.pos_cg[0])
+        self.p_o = p_o + m_z * self.area * self.r / hole_of_inertia * np.sign(self.pos_cg[0])
 
 #Finding the centroid for the hole group
 def find_hole_cg(holes):
