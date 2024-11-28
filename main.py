@@ -26,6 +26,7 @@ holes_cg = Meth.find_hole_cg(holes)  # computation cg
 hole_inertia = Meth.hole_of_inertia(holes)  # hole of inertia
 n = np.arange(holes)
 total_force_squared = 0
+pull_push_stresses, bearing_stresses, fastener_stresses, thermal_stresses = [], [], [], []
 for j in holes:
     j.find_pos_cg()
     j.find_r()
@@ -34,8 +35,21 @@ for j in holes:
     pull_push_stress = test.pull_push_check(j, t2, t3)
     bearing_stress = test.bearing_check(j, t2)
     fastener_stress = test.fastener_check(j)
+
     total_force_squared = total_force_squared + j.p[0] ** 2 + j.p[1]**2 + j.p[2]**2
+    pull_push_stresses = pull_push_stresses.append(pull_push_stress)
+    bearing_stresses = bearing_stresses.append(bearing_stress)
+    fastener_stresses = fastener_stresses.append(fastener_stress)
+
 for k in holes:
     for l in materials:
         thermal_stress = test.thermal_loads(j, Young_Modulus=k[0], alpha_c_clamped=k[4], alpha_b_fastener=fastener[6], stiffness_area_fastener= math.pi * 4 * j.dia, force_ratio=(math.sqrt((k.p_i**2+k.p_o**2)/total_force_squared)))
+        thermal_stresses = thermal_stresses.append(thermal_stress)
+# safety factors
+allowable_stresses = []
+for h in materials:
+    allowable_stresses.append(h[2:3])
+# Safety factors
+
+
 
