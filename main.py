@@ -3,8 +3,6 @@ import math
 import pandas as pd
 import Methods.VariableSetup as Meth
 
-
-
 xls = pd.ExcelFile("Design.xls")  # excel to usable variable
 xls = pd.read_excel(xls, sheet_name="Data")
 x = xls["X"].tolist()
@@ -26,4 +24,4 @@ for j in holes:
     j.find_pos_cg()
     j.find_r()
     j.p_i_computation(f_x, f_z, m_y, n, hole_inertia)
-    j.p_i_computation(f_y,m_x, m_z, h, n, hole_inertia)  #  TO DO : H
+    j.p_o_computation(f_y,m_x, m_z, h, n, hole_inertia)  #  TO DO : H
