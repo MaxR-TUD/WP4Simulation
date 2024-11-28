@@ -41,9 +41,9 @@ for j in holes:
     bearing_stresses.append(bearing_stress)
     fastener_stresses.append(fastener_stress)
 
-for k in holes:
-    for l in materials:
-        thermal_stress = test.thermal_loads(j, Young_Modulus=k[0], alpha_c_clamped=k[4], alpha_b_fastener=fastener[6], stiffness_area_fastener= math.pi * 4 * j.dia, force_ratio=(math.sqrt((k.p_i**2+k.p_o**2)/total_force_squared)))
+for l in holes:
+    for k in materials:
+        thermal_stress = test.thermal_loads(l, Young_Modulus=k[0], alpha_c_clamped=k[4], alpha_b_fastener=fastener[6], stiffness_area_fastener= math.pi * 4 * l.dia, force_ratio=(math.sqrt((l.p_i**2+l.p_o**2)/total_force_squared)))
         thermal_stresses.append(thermal_stress)
 # safety factors
 allowable_stresses = []
