@@ -3,14 +3,14 @@ import math
 import numpy as np
 
 
-def pull_push_check(hole,Do=0, t2=0, t3=0):  # hole is a hole retard
-    stress_t2 = 2 * hole.p_o / (math.pi * (Do - hole.dia))  # [Pa]
-    stress_t3 = 2 * hole.p_o / (math.pi * (Do - hole.dia))  # [Pa]
+def pull_push_check(hole, t2=0, t3=0):  # hole is a hole retard
+    stress_t2 = 2 * hole.p_o / (math.pi * hole.dia * t2)  # [Pa]
+    stress_t3 = 2 * hole.p_o / (math.pi * hole.dia * t3)  # [Pa]
     return [stress_t2, stress_t3]
 
 
-def bearing_check(hole, d2, t2):
-    stress = hole.p_i/(d2 * t2)
+def bearing_check(hole, t2):
+    stress = hole.p_i/(hole.dia * t2)
     return stress
 
 
@@ -34,3 +34,4 @@ def thermal_loads(hole, Young_Modulus, alpha_b_fastener, alpha_c_clamped, stiffn
     F_tMax = (alpha_c - alpha_b) * (Tmax - Tspace) * E * Asm * (1 - phi)
 
     return {F_tMin, F_tMax}
+
