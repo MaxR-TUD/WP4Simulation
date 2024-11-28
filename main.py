@@ -4,11 +4,11 @@ import pandas as pd
 import Methods.VariableSetup as Meth
 import Methods.PullPushThrough as test
 
-xls = pd.ExcelFile("Design.xls")  # excel to usable variable
+xls = pd.ExcelFile("GEOMETRY FILE.xlsx")  # excel to usable variable
 xls = pd.read_excel(xls, sheet_name="Data")
-x = xls["X"].tolist()
-y = xls["Y"].tolist()
-d = xls["D"].tolist()
+x = xls["X"].tolist()[:4]
+y = xls["Y"].tolist()[:4]
+d = xls["D"].tolist()[:4]
 h = xls["flange"].tolist()[3]
 t2, t3 = xls["thickness"][0], xls["thickness"][1]
 materials= [xls["material1"].tolist(), xls["material2"].tolist(), xls["material3"].tolist()] # E, G, Tau max, Sigma max
@@ -16,20 +16,21 @@ fastener = xls["bolt"].tolist()
 f_x, f_y, f_z, m_x, m_y, m_z = xls["forces"].tolist()[0], xls["forces"].tolist()[1],xls["forces"].tolist()[2], xls["forces"].tolist()[3], xls["forces"].tolist()[4], xls["forces"].tolist()[5]
 holes = []
 
-for i in range(x):
+for i in range(len(x)):
     c = (x[i], y[i])
     d_buffer = d[i]
-    holes.append(Meth.hole(c, d))
+    holes.append(Meth.hole(c, d_buffer))
 
 holes = np.array(holes)  # list to array
 holes_cg = Meth.find_hole_cg(holes)  # computation cg
-hole_inertia = Meth.hole_of_inertia(holes)  # hole of inertia
-n = np.arange(holes)
+for hole in holes:
+    hole.find_pos_cg(hole_cg=holes_cg)
+    hole.find_r()
+hole_inertia = Meth.find_inertia(holes)  # hole of inertia
+n = len(holes)
 total_force_squared = 0
 pull_push_stresses, bearing_stresses, fastener_stresses, thermal_stresses = [], [], [], []
 for j in holes:
-    j.find_pos_cg()
-    j.find_r()
     j.p_i_computation(f_x, f_z, m_y, n, hole_inertia)
     j.p_o_computation(f_y,m_x, m_z, h, n, hole_inertia)
     pull_push_stress = test.pull_push_check(j, t2, t3)
@@ -49,18 +50,18 @@ for l in holes:
 allowable_stresses = []
 Safety_pull_push = []
 for h in materials:
-    allowable_stresses.append(h[2:3])
+    allowable_stresses.append(h[2:4])
 for i in pull_push_stresses:
-    SF1 = allowable_stresses[0] / i[0]
-    SF2 = allowable_stresses[0] / i[1]
+    SF1 = allowable_stresses[0][0] / i[0]
+    SF2 = allowable_stresses[0][0] / i[1]
     Safety_pull_push.append([SF1,SF2])
 Safety_fastener = []
 for i in fastener_stresses:
-    SF1 = allowable_stresses[0]/i[0]
-    SF2 = allowable_stresses[1]/i[1]
+    SF1 = allowable_stresses[0][0]/i[0]
+    SF2 = allowable_stresses[0][1]/i[1]
     Safety_fastener.append([SF1, SF2])
 Safety_bearing = []
 for i in bearing_stresses:
-    SF = allowable_stresses/i[0]
+    SF = allowable_stresses[0][0]/i
     Safety_bearing.append(SF)
 print(f"pull push : {Safety_pull_push}\n fasteners : {Safety_fastener}\n Bearing : {Safety_bearing}")
