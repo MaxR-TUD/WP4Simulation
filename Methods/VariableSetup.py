@@ -9,6 +9,7 @@ class hole:
         self.area = (self.dia /2) **2 * math.pi
         self.pos_cg = 0 # position in relation with centroid #tuple in (x*, z*)
         self.r = 0 # distance to centroid
+        self.p = [0, 0, 0]
         self.p_i = 0
         self.p_o = 0
 
@@ -40,6 +41,8 @@ class hole:
             p_z += p_m_y * math.cos(alpha)
 
         self.p_i = (p_x ** 2 + p_z ** 2) ** (1/2)
+        self.p[0] = p_x
+        self.p[2] = p_z
     
     #find out-out-plane forces
     def p_o_computation(self, f_y, m_x, m_z, gap, n_holes, hole_of_inertia):
@@ -49,6 +52,7 @@ class hole:
             a = -1
         p_o += a * m_x / gap / n_holes
         self.p_o = p_o + m_z * self.area * self.r / hole_of_inertia * np.sign(self.pos_cg[0])
+        self.p[1] = self.p_o
 
 #Finding the centroid for the hole group
 def find_hole_cg(holes):
