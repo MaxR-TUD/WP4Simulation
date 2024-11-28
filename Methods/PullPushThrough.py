@@ -8,20 +8,17 @@ def pull_push_check(hole, r_i=0, t2=0, t3=0):  # hole is a hole retard
     return [stress_t2, stress_t3]
 
 
-def bearing_check(hole, Ai, xi, zi, Fx, Fz):
-    xcg = np.dot(Ai, xi)/np.sum(Ai)
-    zcg = np.dot(Ai, zi)/np.sum(Ai)
+def bearing_check(hole, D2, t2):
+    stress = hole.pi/(D2 * t2)
+    return stress
 
 
-    return
-
-
-def thermal_loads(hole,) :
-    E = 123
-    alpha_b = 123
-    alpha_c = 123
-    Asm = 123
-    phi = "?"
+def thermal_loads(hole, Young_Modulus, alpha_b_fastener, alpha_c_clamped, stiffness_area_fastener, force_ratio) :
+    E = Young_Modulus
+    alpha_b = alpha_b_fastener
+    alpha_c = alpha_c_clamped
+    Asm = stiffness_area_fastener
+    phi = force_ratio
     Tmin = 273.64
     Tmax = 297.83
     Tspace = 2.7
