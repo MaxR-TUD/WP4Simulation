@@ -16,22 +16,23 @@ t = 0.1 * ( 10 ** (-2) )
 #graphs
 
 #Kt graph
-#graph 2
+#graph 1
 
-Kt_vals = np.array([[1,1.5,2,2.5,3,3.5,4,4.6],[1,0.99,0.98,0.94,0.92,0.88,0.83,0.72]])
-Kt_coeffs = np.polyfit(Kt_vals[0], Kt_vals[1], 3)
-print("Cubic Fit Coefficients:", Kt_coeffs)
+Kt_vals1 = np.array([[1, 1.5, 2, 2.5, 2.9], [1, 0.999, 0.975, 0.94, 0.92]])
+Kt_coeffs1 = np.polyfit(Kt_vals1[0], Kt_vals1[1], 3)
+plot_kt1 = np.poly1d(Kt_coeffs1)
 
-plot_kt = np.poly1d(Kt_coeffs)
-# Plot data and fit
-# xp_kt = np.linspace(1, 6, 100)
+Kt_vals2 = np.array([[2.9, 3.0, 3.5, 3.9, 4.2, 4.4, 4.7, 4.8, 4.95], [0.92, 0.92, 0.916, 0.9, 0.88, 0.865, 0.82, 0.8, 0.76]])
+Kt_coeffs2 = np.polyfit(Kt_vals2[0], Kt_vals2[1], 2)
+plot_kt2 = np.poly1d(Kt_coeffs2)
+
+if w / d <= 2.9:
+    k_t = plot_kt1( w / d )
+else:
+    k_t = plot_kt2( w / d )
 
 
-#graph 4
-#def plot_kt(x):
-#    return 0.00937539 * x ** 2 - 0.136006 * x + 1.12789
 
-k_t = plot_kt( w / d )
 
 #Kbry Graph
 Kbry_options = {0.06: np.array([[0.5,1,1.5,2,2.5,3,3.5,4],\
@@ -56,15 +57,21 @@ Kbry_options = {0.06: np.array([[0.5,1,1.5,2,2.5,3,3.5,4],\
 tOverD_options = [0.06, 0.08, 0.1, 0.12, 0.15, 0.2, 0.3, 0.4, 0.6]
 
 def round_to_nearest_option(x, y):
-    for i in y:
-        if x < i:
-            x = i
-            break
-        else:
-            x = i
-    return x
+    if x <= y[0]:
+        return y[0]
+    elif x >= y[-1]:
+        return y[-1]
+    else:
+        for i in range(len(y) - 1):
+            if x < 1/2 * ( y[i] + y[i+1] ):
+                g = y[i]
+                break
+            else:
+                g = y[i+1]
+        return g
 
 rounded_tOverD = round_to_nearest_option( t / d , tOverD_options)
+print( t / d )
 print(f"Rounded value: {rounded_tOverD}")
 
 Kbry_vals = Kbry_options.get(rounded_tOverD)
@@ -75,13 +82,8 @@ print("Cubic Fit Coefficients:", Kbry_coeffs)
 
 plot_bry = np.poly1d(Kbry_coeffs)
 
-# Plot data and fit
-# xp_bry = np.linspace(0.5, 4, 100)
-
 # evalute value from regression
 k_bry = plot_bry( 1/2 * w / d )
-
-
 
 
 #Kty Graph
@@ -92,11 +94,8 @@ aavabr = 6 / ( ( aav ) * d  )
 
 print(aavabr)
 
-
 def kty(x):
     return -0.341518 * x ** 2 + 1.39628 * x - 0.00520833
-# Plot data and fit
-# xp_kty = np.linspace(0, 1.4, 100)
 
 # evaluate value from regression
 k_ty = kty( aavabr )
