@@ -47,9 +47,20 @@ for k in holes:
         thermal_stresses = thermal_stresses.append(thermal_stress)
 # safety factors
 allowable_stresses = []
+Safety_pull_push = []
 for h in materials:
     allowable_stresses.append(h[2:3])
-# Safety factors
-
-
-
+for i in pull_push_stresses:
+    SF1 = allowable_stresses[0] / i[0]
+    SF2 = allowable_stresses[0] / i[1]
+    Safety_pull_push.append([SF1,SF2])
+Safety_fastener = []
+for i in fastener_stresses:
+    SF1 = allowable_stresses[0]/i[0]
+    SF2 = allowable_stresses[1]/i[1]
+    Safety_fastener.append([SF1, SF2])
+Safety_bearing = []
+for i in bearing_stresses:
+    SF = allowable_stresses/i[0]
+    Safety_bearing.append(SF)
+print(f"pull push : {Safety_pull_push}\n fasteners : {Safety_fastener}\n Bearing : {Safety_bearing}")
