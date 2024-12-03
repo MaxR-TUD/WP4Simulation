@@ -9,9 +9,10 @@ p_tr = 142.2
 material = "sdfs"
 sigma_yield = 320 * ( 10 ** 6 )
 
-w = 4 * ( 10 ** (-2) )
+w = 7 * ( 10 ** (-2) )
 d = 2.6 * ( 10 ** (-2) )
-t = 0.05 * ( 10 ** (-2) )
+t = 0.1 * ( 10 ** (-2) )
+l = 7.5 * (10 ** (-2))
 
 #graphs
 
@@ -131,3 +132,6 @@ def margin():
     return ms
 
 print(margin())
+
+sigma = M_y / (t * w ** 2 / 6)
+sigma2 = M_y / (t ** 2 * w / 6)
