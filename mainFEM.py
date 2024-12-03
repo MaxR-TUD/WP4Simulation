@@ -7,11 +7,11 @@ import Methods.VariableSetup as Meth
 import Methods.PullPushThrough as test
 
 
-xls = pd.ExcelFile("GEOMETRY FILE.xlsx")  # excel to usable variable
+xls = pd.ExcelFile("FEM.xlsx")  # excel to usable variable
 xls = pd.read_excel(xls, sheet_name="Data")
-x = xls["X"].tolist()[:4]
-y = xls["Y"].tolist()[:4]
-d = xls["D"].tolist()[:4]
+x = xls["X"].tolist()
+y = xls["Y"].tolist()
+d = xls["D"].tolist()
 h = xls["flange"].tolist()[3]
 t2, t3 = xls["thickness"][0], xls["thickness"][1]
 materials= [xls["material1"].tolist(), xls["material2"].tolist(), xls["material3"].tolist()] # E, G, Tau max, Sigma max
