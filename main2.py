@@ -4,14 +4,14 @@ import matplotlib.pyplot as plt
 
 #inputs
 
-p_axial = 282.42
+p_axial = 1412
 p_tr = 142.2
 material = "sdfs"
 sigma_yield = 320 * ( 10 ** 6 )
 
-w = 1.45 * ( 10 ** (-2) )
-d = 1.3 * ( 10 ** (-2) )
-t = 0.1 * ( 10 ** (-2) )
+w = 4 * ( 10 ** (-2) )
+d = 2.6 * ( 10 ** (-2) )
+t = 0.05 * ( 10 ** (-2) )
 
 #graphs
 
