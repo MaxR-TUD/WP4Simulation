@@ -56,15 +56,9 @@ for j in holes:
     j.p_o_computation(f_y,m_x, m_z, h, n, hole_inertia)
     indexx = just_x.index(j.pos[0])
     indexz = just_z.index(j.pos[1])
-    p_i_data[indexz][indexx] = j.p_i
-    p_o_data[indexz][indexx] = j.p_o
-    p_tot_data[indexz][indexx] = ( j.p_i ** 2 + j.p_o ** 2 ) ** (1/2)
-
-fig, ax = plt.figure()
-fig.canvas.draw()
-
-ax.set_xticklabels(just_x)
-ax.set_yticklabels(just_z)
+    p_i_data[indexz, indexx] = j.p_i
+    p_o_data[indexz, indexx] = j.p_o
+    p_tot_data[indexz, indexx] = ( j.p_i ** 2 + j.p_o ** 2 ) ** (1/2)
 
 p_i_map = seaborn.heatmap(p_i_data)
 p_i_map.invert_yaxis()
