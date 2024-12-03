@@ -3,12 +3,12 @@ import math
 import pandas as pd
 import Methods.VariableSetup as Meth
 import Methods.PullPushThrough as test
-
+n = int(input("enter the number of holes"))
 xls = pd.ExcelFile("GEOMETRY FILE.xlsx")  # excel to usable variable
 xls = pd.read_excel(xls, sheet_name="Data")
-x = xls["X"].tolist()[:4]
-y = xls["Y"].tolist()[:4]
-d = xls["D"].tolist()[:4]
+x = xls["X"].tolist()[:n]
+y = xls["Y"].tolist()[:n]
+d = xls["D"].tolist()[:n]
 h = xls["flange"].tolist()[3]
 t2, t3 = xls["thickness"][0], xls["thickness"][1]
 materials= [xls["material1"].tolist(), xls["material2"].tolist(), xls["material3"].tolist()] # E, G, Tau max, Sigma max
@@ -27,7 +27,7 @@ for hole in holes:
     hole.find_pos_cg(hole_cg=holes_cg)
     hole.find_r()
 hole_inertia = Meth.find_inertia(holes)  # hole of inertia
-n = len(holes)
+
 total_force_squared = 0
 pull_push_stresses, bearing_stresses, fastener_stresses, thermal_stresses = [], [], [], []
 for j in holes:
