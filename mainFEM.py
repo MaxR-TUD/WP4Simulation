@@ -54,11 +54,11 @@ p_tot_data = np.empty(shape = (len(just_x), len(just_z)))
 for j in holes:
     j.p_i_computation(f_x, f_z, m_y, n, hole_inertia)
     j.p_o_computation(f_y,m_x, m_z, h, n, hole_inertia)
-    indexx = just_x.index(j.pos[0])
-    indexz = just_z.index(j.pos[1])
-    p_i_data[indexz, indexx] = j.p_i
-    p_o_data[indexz, indexx] = j.p_o
-    p_tot_data[indexz, indexx] = ( j.p_i ** 2 + j.p_o ** 2 ) ** (1/2)
+    index_x = just_x.index(j.pos[0])
+    index_z = just_z.index(j.pos[1])
+    p_i_data[index_z, index_x] = j.p_i
+    p_o_data[index_z, index_x] = j.p_o
+    p_tot_data[index_z, index_x] = ( j.p_i ** 2 + j.p_o ** 2 ) ** (1/2)
 
 
 # p_i_map = seaborn.heatmap(p_i_data)

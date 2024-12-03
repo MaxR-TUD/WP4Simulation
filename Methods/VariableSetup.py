@@ -26,7 +26,7 @@ class hole:
     def p_i_computation(self, f_x, f_z, m_y, n_holes, hole_of_inertia):
         p_x = f_x / 2 / n_holes
         p_z = f_z / 2 / n_holes
-        p_m_y = m_y * self.area * self.r / hole_of_inertia
+        p_m_y = m_y * self.area * self.r / hole_of_inertia[0]
 
         #decomposing p_m_y and adding it to the component forces
         if self.pos_cg[0] == 0:
@@ -50,10 +50,9 @@ class hole:
         a = 1
         if self.pos_cg[1] > 0:
             a = -1
-        #p_o += a * m_x / gap / n_holes
+        p_o += a * m_x / gap / n_holes
 
-
-        self.p_o = p_o + m_z * self.area * self.pos_cg[0] / hole_of_inertia * np.sign(self.pos_cg[0])
+        self.p_o = p_o + m_z * self.area * self.pos_cg[0] / hole_of_inertia[2]
         self.p[1] = self.p_o
 
 #Finding the centroid for the hole group
@@ -77,9 +76,11 @@ def find_hole_cg(holes):
 
 #calculate "sum (Ar^2)"
 def find_inertia(holes):
-    moment_of_inertia = 0
+    moment_of_inertia = [0,0,0] #r, xx, zz
     for hole in holes:
-        moment_of_inertia += hole.area * ( hole.r ** 2 )
+        moment_of_inertia[0] += hole.area * ( hole.r ** 2 )
+        moment_of_inertia[1] += hole.area * ( hole.pos_cg[1] ** 2 )
+        moment_of_inertia[2] += hole.area * ( hole.pos_cg[0] ** 2 )
     return moment_of_inertia
 
 # hole_of_inertia = find_inertia(holes)
