@@ -35,34 +35,36 @@ n = len(holes)
 
 #heatmap
 just_x = []
-just_y = []
+just_z = []
 
 for i in range(len(x)):
     #creating axes for the heatmap
     if x[i] not in just_x:
         just_x.append(x[i])
-    if y[i] not in just_y:
-        just_y.append(y[i])
+    if y[i] not in just_z:
+        just_z.append(y[i])
 
 just_x.sort()
-just_y.sort()
+just_z.sort()
 
-p_i_data = np.empty(shape = (len(just_y), len(just_x)))
-p_o_data = np.empty(shape = (len(just_x), len(just_y)))
-p_tot_data = np.empty(shape = (len(just_x), len(just_y)))
+p_i_data = np.empty(shape = (len(just_z), len(just_x)))
+p_o_data = np.empty(shape = (len(just_x), len(just_z)))
+p_tot_data = np.empty(shape = (len(just_x), len(just_z)))
 
 for j in holes:
     j.p_i_computation(f_x, f_z, m_y, n, hole_inertia)
     j.p_o_computation(f_y,m_x, m_z, h, n, hole_inertia)
-    p_i_data[j.pos[1]][j.pos[0]] = j.p_i
-    p_o_data[j.pos[1]][j.pos[0]] = j.p_o
-    p_tot_data[j.pos[1]][j.pos[0]] = ( j.p_i ** 2 + j.p_o ** 2 ) ** (1/2)
+    indexx = just_x.index(j.pos[0])
+    indexz = just_z.index(j.pos[1])
+    p_i_data[indexz][indexx] = j.p_i
+    p_o_data[indexz][indexx] = j.p_o
+    p_tot_data[indexz][indexx] = ( j.p_i ** 2 + j.p_o ** 2 ) ** (1/2)
 
 fig, ax = plt.figure()
 fig.canvas.draw()
 
 ax.set_xticklabels(just_x)
-ax.set_yticklabels(just_y)
+ax.set_yticklabels(just_z)
 
 p_i_map = seaborn.heatmap(p_i_data)
 p_i_map.invert_yaxis()
