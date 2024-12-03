@@ -50,8 +50,10 @@ class hole:
         a = 1
         if self.pos_cg[1] > 0:
             a = -1
-        p_o += a * m_x / gap / n_holes
-        self.p_o = p_o + m_z * self.area * self.r / hole_of_inertia * np.sign(self.pos_cg[0])
+        #p_o += a * m_x / gap / n_holes
+
+
+        self.p_o = p_o + m_z * self.area * self.pos_cg[0] / hole_of_inertia * np.sign(self.pos_cg[0])
         self.p[1] = self.p_o
 
 #Finding the centroid for the hole group
