@@ -52,7 +52,7 @@ class hole:
             a = midlines[0]
         else:
             a = midlines[1]
-        p_o += f_z * w * self.area * (self.pos[1] - a) / hole_of_inertia[1] #just xx for one plate
+        p_o += f_z / 2 * w * self.area * (self.pos[1] - a) / hole_of_inertia[1] #just xx for one plate
 
         if self.pos_cg[1] > 0:
             b = -1
