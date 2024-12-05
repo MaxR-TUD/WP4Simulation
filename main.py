@@ -26,13 +26,15 @@ holes_cg = Meth.find_hole_cg(holes)  # computation cg
 for hole in holes:
     hole.find_pos_cg(hole_cg=holes_cg)
     hole.find_r()
-hole_inertia = Meth.find_inertia(holes)  # hole of inertia
+midlines = Meth.find_midline_plate(holes) # intermediate step
+hole_inertia = Meth.find_inertia(holes, midlines)  # hole of inertia
+
 
 total_force_squared = 0
 pull_push_stresses, bearing_stresses, fastener_stresses, thermal_stresses = [], [], [], []
 for j in holes:
     j.p_i_computation(f_x, f_z, m_y, n, hole_inertia)
-    j.p_o_computation(f_y, m_x, m_z, h, n, hole_inertia)
+    j.p_o_computation(f_y, f_z, m_x, m_z, h, l, n, hole_inertia, midlines)
     pull_push_stress = test.pull_push_check(j, t2, t3)
     bearing_stress = test.bearing_check(j, t2)
     fastener_stress = test.fastener_check(j)
