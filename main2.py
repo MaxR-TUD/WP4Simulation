@@ -72,14 +72,14 @@ def round_to_nearest_option(x, y):
         return g
 
 rounded_tOverD = round_to_nearest_option( t / d , tOverD_options)
-print( t / d )
-print(f"Rounded value: {rounded_tOverD}")
+#print( t / d )
+#print(f"Rounded value: {rounded_tOverD}")
 
 Kbry_vals = Kbry_options.get(rounded_tOverD)
-print(Kbry_vals)
+#print(Kbry_vals)
 
 Kbry_coeffs = np.polyfit(Kbry_vals[0], Kbry_vals[1], 4)
-print("Cubic Fit Coefficients:", Kbry_coeffs)
+#print("Cubic Fit Coefficients:", Kbry_coeffs)
 
 plot_bry = np.poly1d(Kbry_coeffs)
 
@@ -93,7 +93,7 @@ aav = ( 8 / (w - math.sin(45 * math.pi / 180) * d ) ) + ( 4 / ( w - d ) ) # with
 
 aavabr = 6 / ( ( aav ) * d  )
 
-print(aavabr)
+#print(aavabr)
 
 def kty(x):
     return -0.341518 * x ** 2 + 1.39628 * x - 0.00520833
@@ -101,7 +101,7 @@ def kty(x):
 # evaluate value from regression
 k_ty = kty( aavabr )
 
-print(k_ty)
+#print(k_ty)
 
 
 
@@ -121,20 +121,19 @@ def min_pbry_pu():
         return p_u
 
 r_a = p_axial / (min_pbry_pu())
-print(r_a)
+#print(r_a)
 
 
 r_tr = p_tr / p_ty
-print(r_tr)
+#print(r_tr)
 
 def margin():
     ms = 1 / ( ( r_a ** 1.6 + r_tr ** 1.6 ) ** 0.625 ) - 1
     return ms
-
+print("Safety Margin of the Hole of the lug")
 print(margin())
 
-sigma = 164.2 *0.075 / (t * w ** 2 / 6)
-sigma2 = 76 *0.075 / (t ** 2 * w / 6)
+sigma = 328.4 / 2 * l * l / 2 / (t * w ** 3 / 12) + 284.3 / 2 * l * t / 2 / (t ** 3 * w / 12)
 
-print(sigma_yield / sigma - 1)
-print(sigma_yield / sigma2 - 1)
+print("Safety Margin of the Lug itself bending")
+print(sigma_yield/sigma - 1)
