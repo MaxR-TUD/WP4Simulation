@@ -13,8 +13,9 @@ sigma_yield = 414 * ( 10 ** 6 )
 
 w = 2.5 * ( 10 ** (-2) )
 d = 1.4 * ( 10 ** (-2) )
-t = 0.19 * ( 10 ** (-2) )
+t = 0.2 * ( 10 ** (-2) )
 l = 7.5 * (10 ** (-2))
+h = 1.7 * ( 10 ** (-2) )
 
 #graphs
 
@@ -133,7 +134,7 @@ def margin():
 print("Safety Margin of the Hole of the lug")
 print(margin())
 
-sigma = f_z / 2 * l * l / 2 / (t * w ** 3 / 12) + f_x / 2 * l * t / 2 / (t ** 3 * w / 12)
+sigma = f_z / 2 * l * l / 2 / (t * w ** 3 / 12) + f_x / 2 * l * t / 2 / (t ** 3 * w / 12) + 0.674 / h / 2 / (t * w)
 
 print("Safety Margin of the Lug itself bending")
 print(sigma_yield/sigma - 1)
