@@ -6,7 +6,9 @@ import matplotlib.pyplot as plt
 
 p_axial = 1412
 p_tr = 142.2
-material = "sdfs"
+f_x = 284.3
+f_z = 328.4
+material = "Aluminium 2014-T6"
 sigma_yield = 414 * ( 10 ** 6 )
 
 w = 7 * ( 10 ** (-2) )
@@ -133,7 +135,7 @@ def margin():
 print("Safety Margin of the Hole of the lug")
 print(margin())
 
-sigma = 328.4 / 2 * l * l / 2 / (t * w ** 3 / 12) + 284.3 / 2 * l * t / 2 / (t ** 3 * w / 12)
+sigma = f_z / 2 * l * l / 2 / (t * w ** 3 / 12) + f_x / 2 * l * t / 2 / (t ** 3 * w / 12)
 
 print("Safety Margin of the Lug itself bending")
 print(sigma_yield/sigma - 1)
