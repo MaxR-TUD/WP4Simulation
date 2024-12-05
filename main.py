@@ -51,19 +51,23 @@ for l in holes:
 # safety factors
 allowable_stresses = []
 Safety_pull_push = []
+mn = 1
 for h in materials:
     allowable_stresses.append(h[2:4])
-for i in pull_push_stresses:
-    SF1 = allowable_stresses[0][0] / i[0]
-    SF2 = allowable_stresses[0][0] / i[1]
-    Safety_pull_push.append([SF1,SF2])
-Safety_fastener = []
-for i in fastener_stresses:
-    SF1 = allowable_stresses[0][0]/i[0]
-    SF2 = allowable_stresses[0][1]/i[1]
-    Safety_fastener.append([SF1, SF2])
-Safety_bearing = []
-for i in bearing_stresses:
-    SF = allowable_stresses[0][0]/i
-    Safety_bearing.append(SF)
-print(f"pull push : {Safety_pull_push}\n fasteners : {Safety_fastener}\n Bearing : {Safety_bearing}")
+for j in allowable_stresses:
+    for i in pull_push_stresses:
+        SF1 = j[0] / i[0]
+        SF2 = j[0] / i[1]
+        Safety_pull_push.append([SF1,SF2])
+    Safety_fastener = []
+    for i in fastener_stresses:
+        SF1 = j[0] / i[0]
+        SF2 = j[1] / i[1]
+        Safety_fastener.append([SF1, SF2])
+    Safety_bearing = []
+    for i in bearing_stresses:
+        SF = allowable_stresses[0][0]/i
+        Safety_bearing.append(SF)
+    name = f"material{mn}"
+    mn = mn + 1
+    print(f"{name}\n pull push : {Safety_pull_push}\n fasteners : {Safety_fastener}\n Bearing : {Safety_bearing}")
