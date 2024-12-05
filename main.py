@@ -3,7 +3,7 @@ import math
 import pandas as pd
 import Methods.VariableSetup as Meth
 import Methods.PullPushThrough as test
-n = int(input("enter the number of holes"))
+n = 8
 xls = pd.ExcelFile("GEOMETRY FILE.xlsx")  # excel to usable variable
 xls = pd.read_excel(xls, sheet_name="Data")
 x = xls["X"].tolist()[:n]
