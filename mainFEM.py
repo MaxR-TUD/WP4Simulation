@@ -61,8 +61,8 @@ for j in holes:
     p_tot_data[index_z, index_x] = ( j.p_i ** 2 + j.p_o ** 2 ) ** (1/2)
 
 
-# p_i_map = seaborn.heatmap(p_i_data)
-# p_i_map.invert_yaxis()
-p_o_map = seaborn.heatmap(p_o_data)
-p_o_map.invert_yaxis()
+p_i_map = seaborn.heatmap(p_i_data)
+p_i_map.invert_yaxis()
+# p_o_map = seaborn.heatmap(p_o_data)
+# p_o_map.invert_yaxis()
 plt.show()

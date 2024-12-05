@@ -24,8 +24,8 @@ class hole:
 
     #find in-plane forces
     def p_i_computation(self, f_x, f_z, m_y, n_holes, hole_of_inertia):
-        p_x = f_x / 2 / n_holes
-        p_z = f_z / 2 / n_holes
+        p_x = f_x / n_holes
+        p_z = f_z / n_holes
         p_m_y = m_y * self.area * self.r / hole_of_inertia[0]
 
         #decomposing p_m_y and adding it to the component forces
@@ -46,7 +46,7 @@ class hole:
     
     #find out-out-plane forces
     def p_o_computation(self, f_y, m_x, m_z, gap, n_holes, hole_of_inertia):
-        p_o = f_y / 2 / n_holes
+        p_o = f_y / n_holes
         a = 1
         if self.pos_cg[1] > 0:
             a = -1
