@@ -34,7 +34,7 @@ total_force_squared = 0
 pull_push_stresses, bearing_stresses, fastener_stresses, thermal_stresses = [], [], [], []
 for j in holes:
     j.p_i_computation(f_x, f_z, m_y, n, hole_inertia)
-    j.p_o_computation(f_y, f_z, m_x, m_z, h, w, n, hole_inertia, midlines)
+    j.p_o_computation(f_y, f_z, m_x, m_z, h, l, n, hole_inertia, midlines)
     pull_push_stress = test.pull_push_check(j, t2, t3)
     bearing_stress = test.bearing_check(j, t2)
     fastener_stress = test.fastener_check(j)
