@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 
 p_axial = 1412
 p_tr = 142.2
-f_x = 284.3
-f_z = 328.4
+f_x = 284.3 / 2
+f_z = 328.4 / 2
 material = "Aluminium 2014-T6"
 sigma_yield = 414 * ( 10 ** 6 )
 

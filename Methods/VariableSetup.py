@@ -72,7 +72,7 @@ def find_hole_cg(holes):
         hole_cg_x += hole.area * ( hole.pos[0] )
         total_area += hole.area
     for hole in holes:
-        hole_cg_z += hole.area * ( hole.pos [1] )
+        hole_cg_z += hole.area * ( hole.pos[1] )
 
     hole_cg_x = hole_cg_x / total_area
     hole_cg_z = hole_cg_z / total_area
@@ -87,13 +87,15 @@ def find_midline_plate(holes):
     midline_down = 0
     midline_up = 0
     n = 0
+    m = 0
     for hole in holes:
         if hole.pos_cg[1] > 0:
             midline_up += hole.pos[1]
+            n += 1
         else:
             midline_down += hole.pos[1]
-        n += 1
-    midline_down = midline_down / n
+            m += 1
+    midline_down = midline_down / m
     midline_up = midline_up / n
     return (midline_up, midline_down)
 
@@ -104,7 +106,7 @@ def find_inertia(holes, midlines):
     for hole in holes:
         moment_of_inertia[0] += hole.area * ( hole.r ** 2 )
         if hole.pos_cg[1] > 0:
-            moment_of_inertia[1] += hole.area * ( (hole.pos[1] - midlines[0] )** 2 )
+            moment_of_inertia[1] += hole.area * ( (hole.pos[1] - midlines[0] ) ** 2 )
         moment_of_inertia[2] += hole.area * ( hole.pos_cg[0] ** 2 )
     return moment_of_inertia
 
