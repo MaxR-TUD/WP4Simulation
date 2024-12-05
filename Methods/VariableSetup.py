@@ -72,7 +72,7 @@ def find_hole_cg(holes):
         hole_cg_x += hole.area * ( hole.pos[0] )
         total_area += hole.area
     for hole in holes:
-        hole_cg_z += hole.area * ( hole.pos [1] )
+        hole_cg_z += hole.area * ( hole.pos[1] )
 
     hole_cg_x = hole_cg_x / total_area
     hole_cg_z = hole_cg_z / total_area
