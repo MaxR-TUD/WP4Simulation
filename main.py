@@ -10,8 +10,9 @@ x = xls["X"].tolist()[:n]
 y = xls["Y"].tolist()[:n]
 d = xls["D"].tolist()[:n]
 h = xls["flange"].tolist()[3]
+l = xls["l"].tolist()[0]
 t2, t3 = xls["thickness"][0], xls["thickness"][1]
-materials= [xls["material1"].tolist()[:5], xls["material2"].tolist()[:5], xls["material3"].tolist()[:5]] # E, G, Tau max, Sigma max
+materials= [xls["material1"].tolist()[:6], xls["material2"].tolist()[:6], xls["material3"].tolist()[:6]] # E, G, Tau max, Sigma max
 fastener = xls["bolt"].tolist()
 f_x, f_y, f_z, m_x, m_y, m_z = xls["forces"].tolist()[0], xls["forces"].tolist()[1],xls["forces"].tolist()[2], xls["forces"].tolist()[3], xls["forces"].tolist()[4], xls["forces"].tolist()[5]
 holes = []
@@ -46,19 +47,19 @@ for j in holes:
 
 for l in holes:
     for k in materials:
-        thermal_stress = test.thermal_loads(l, Young_Modulus=k[0], alpha_c_clamped=k[4], alpha_b_fastener=fastener[6], stiffness_area_fastener= math.pi * 4 * l.dia, force_ratio=(math.sqrt((l.p_i**2+l.p_o**2)/total_force_squared)))
+        thermal_stress = test.thermal_loads(l, Young_Modulus=k[0], alpha_c_clamped=k[5], alpha_b_fastener=fastener[6], stiffness_area_fastener= math.pi * 4 * l.dia, force_ratio=(math.sqrt((l.p_i**2+l.p_o**2)/total_force_squared)))
         thermal_stresses.append(thermal_stress)
 # safety factors
 allowable_stresses = []
 Safety_pull_push = []
 mn = 1
 for h in materials:
-    allowable_stresses.append(h[2:4])
+    allowable_stresses.append(h[2:5])
 for j in allowable_stresses:
     for i in pull_push_stresses:
         SF1 = j[0] / i[0]
         SF2 = j[0] / i[1]
-        Safety_pull_push.append([SF1,SF2])
+        Safety_pull_push.append([SF1, SF2])
     Safety_fastener = []
     for i in fastener_stresses:
         SF1 = j[0] / i[0]
@@ -66,7 +67,7 @@ for j in allowable_stresses:
         Safety_fastener.append([SF1, SF2])
     Safety_bearing = []
     for i in bearing_stresses:
-        SF = allowable_stresses[0][0]/i
+        SF = j[2]/i
         Safety_bearing.append(SF)
     name = f"material{mn}"
     mn = mn + 1
