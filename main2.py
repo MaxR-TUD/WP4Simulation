@@ -7,11 +7,11 @@ import matplotlib.pyplot as plt
 p_axial = 1412
 p_tr = 142.2
 material = "sdfs"
-sigma_yield = 320 * ( 10 ** 6 )
+sigma_yield = 414 * ( 10 ** 6 )
 
 w = 7 * ( 10 ** (-2) )
 d = 2.6 * ( 10 ** (-2) )
-t = 0.1 * ( 10 ** (-2) )
+t = 0.19 * ( 10 ** (-2) )
 l = 7.5 * (10 ** (-2))
 
 #graphs
@@ -133,5 +133,8 @@ def margin():
 
 print(margin())
 
-sigma = M_y / (t * w ** 2 / 6)
-sigma2 = M_y / (t ** 2 * w / 6)
+sigma = 164.2 *0.075 / (t * w ** 2 / 6)
+sigma2 = 76 *0.075 / (t ** 2 * w / 6)
+
+print(sigma_yield / sigma - 1)
+print(sigma_yield / sigma2 - 1)

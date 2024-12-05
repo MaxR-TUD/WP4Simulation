@@ -45,12 +45,20 @@ class hole:
         self.p[2] = p_z
     
     #find out-out-plane forces
-    def p_o_computation(self, f_y, m_x, m_z, gap, n_holes, hole_of_inertia):
+    def p_o_computation(self, f_y, f_z, m_x, m_z, gap, w, n_holes, hole_of_inertia, midlines):
         p_o = f_y / n_holes
-        a = 1
+
         if self.pos_cg[1] > 0:
-            a = -1
-        p_o += a * m_x / gap / n_holes
+            a = midlines[0]
+        else:
+            a = midlines[1]
+        p_o += f_z * w * self.area * (self.pos[1] - a) / hole_of_inertia[1] #just xx for one plate
+
+        if self.pos_cg[1] > 0:
+            b = -1
+        else:
+            b = 1
+        p_o += b * m_x / gap / n_holes
 
         self.p_o = p_o + m_z * self.area * self.pos_cg[0] / hole_of_inertia[2]
         self.p[1] = self.p_o
@@ -74,12 +82,29 @@ def find_hole_cg(holes):
 
 #Count how many holes there are when reading from the txt file.
 
+#finding midlines for each plate's hole of inertia calculatinos
+def find_midline_plate(holes):
+    midline_down = 0
+    midline_up = 0
+    n = 0
+    for hole in holes:
+        if hole.pos_cg[1] > 0:
+            midline_up += hole.pos[1]
+        else:
+            midline_down += hole.pos[1]
+        n += 1
+    midline_down = midline_down / n
+    midline_up = midline_up / n
+    return (midline_up, midline_down)
+
+
 #calculate "sum (Ar^2)"
-def find_inertia(holes):
-    moment_of_inertia = [0,0,0] #r, xx, zz
+def find_inertia(holes, midlines):
+    moment_of_inertia = [0,0,0] #r, xx (for one plate), zz
     for hole in holes:
         moment_of_inertia[0] += hole.area * ( hole.r ** 2 )
-        moment_of_inertia[1] += hole.area * ( hole.pos_cg[1] ** 2 )
+        if hole.pos_cg[1] > 0:
+            moment_of_inertia[1] += hole.area * ( (hole.pos[1] - midlines[0] )** 2 )
         moment_of_inertia[2] += hole.area * ( hole.pos_cg[0] ** 2 )
     return moment_of_inertia
 
