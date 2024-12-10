@@ -30,7 +30,8 @@ holes_cg = Meth.find_hole_cg(holes)  # computation cg
 for hole in holes:
     hole.find_pos_cg(hole_cg=holes_cg)
     hole.find_r()
-hole_inertia = Meth.find_inertia(holes)  # hole of inertia
+midline = Meth.find_midline_plate(holes)
+hole_inertia = Meth.find_inertia(holes,midlines=midline)  # hole of inertia
 n = len(holes)
 
 #heatmap
@@ -53,7 +54,7 @@ p_tot_data = np.empty(shape = (len(just_x), len(just_z)))
 
 for j in holes:
     j.p_i_computation(f_x, f_z, m_y, n, hole_inertia)
-    j.p_o_computation(f_y,m_x, m_z, h, n, hole_inertia)
+    j.p_o_computation(f_y = f_y, f_z=0 ,m_x = m_x,m_z= m_z,gap = h, n_holes=n, hole_of_inertia=hole_inertia, midlines=midline, l=0.03)
     index_x = just_x.index(j.pos[0])
     index_z = just_z.index(j.pos[1])
     p_i_data[index_z, index_x] = j.p_i
@@ -61,8 +62,8 @@ for j in holes:
     p_tot_data[index_z, index_x] = ( j.p_i ** 2 + j.p_o ** 2 ) ** (1/2)
 
 
-p_i_map = seaborn.heatmap(p_i_data)
+p_i_map = seaborn.heatmap(p_i_data/0.00000025)
 p_i_map.invert_yaxis()
-# p_o_map = seaborn.heatmap(p_o_data)
+# p_o_map = seaborn.heatmap(p_o_data/0.00000025)
 # p_o_map.invert_yaxis()
 plt.show()

@@ -28,9 +28,9 @@ def thermal_loads(hole, Young_Modulus, alpha_b_fastener, alpha_c_clamped, stiffn
     phi = force_ratio
     Tmin = 273.64
     Tmax = 297.83
-    Tspace = 2.7
+    Tassembly = 273.15 + 15
 
-    Stress_tMin = (alpha_c - alpha_b) * (Tmin - Tspace) * E * (1 - phi) * Asm
-    Stress_tMax = (alpha_c - alpha_b) * (Tmax - Tspace) * E * (1 - phi) * Asm
+    Stress_tMin = (alpha_c - alpha_b) * (Tmin - Tassembly) * E * (1 - phi) * Asm
+    Stress_tMax = (alpha_c - alpha_b) * (Tmax - Tassembly) * E * (1 - phi) * Asm
 
     return [Stress_tMin, Stress_tMax]
