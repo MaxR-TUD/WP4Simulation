@@ -61,20 +61,20 @@ nh = 0
 for j in allowable_stresses:
     Safety_pull_push = []
     for i in pull_push_stresses:
-        SF1 = j[0] / ( i[0] + thermal_stresses[nm][nh])
-        SF2 = j[0] / (i[1] + thermal_stresses[nm][nh])
+        SF1 = j[0] / (i[0])
+        SF2 = j[0] / (i[1])
         Safety_pull_push.append([SF1, SF2])
         nh = nh + 1
     Safety_fastener = []
     nh = 0
     for i in fastener_stresses:
-        SF1 = j[1] / (i[0] + thermal_stresses[nm][nh])
-        SF2 = j[0] / (i[1] + thermal_stresses[nm][nh])
+        SF1 = j[1] / (i[0])
+        SF2 = j[0] / (i[1])
         Safety_fastener.append([SF1, SF2])
     Safety_bearing = []
     nh = 0
     for i in bearing_stresses:
-        SF = j[2]/(i + thermal_stresses[nm][nh])
+        SF = j[2]/(i)
         Safety_bearing.append(SF)
         nh = nh + 1
     nh = 0
