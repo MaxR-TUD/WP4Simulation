@@ -62,6 +62,10 @@ class hole:
 
         self.p_o = p_o + m_z * self.area * self.pos_cg[0] / hole_of_inertia[2]
         self.p[1] = self.p_o
+    
+    #add thermal loads to in-plane
+    def add_thermal(self, thermalforces):
+        self.p_i += thermalforces[1]
 
 #Finding the centroid for the hole group
 def find_hole_cg(holes):

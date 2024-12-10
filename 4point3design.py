@@ -129,3 +129,10 @@ sigma = f_z / 2 * l * l / 2 / (t * w ** 3 / 12) + f_x / 2 * l * t / 2 / (t ** 3 
 
 print("Safety Margin of the Lug itself bending")
 print(sigma_yield/sigma - 1)
+
+
+def volume():
+    vol = (l * w + 1 / 2 * math.pi * ( w / 2 )**2 - math.pi * (d/2) **2) * t * 2
+    return vol
+print("Volume of the part")
+print(volume())
