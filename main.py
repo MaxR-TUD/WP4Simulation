@@ -45,30 +45,40 @@ for j in holes:
     bearing_stresses.append(bearing_stress)
     fastener_stresses.append(fastener_stress)
 
-for l in holes:
-    for k in materials:
+
+for k in materials:
+    for l in holes:
         thermal_stress = test.thermal_loads(l, Young_Modulus=k[0], alpha_c_clamped=k[5], alpha_b_fastener=fastener[6], stiffness_area_fastener= math.pi * 4 * l.dia, force_ratio=(math.sqrt((l.p_i**2+l.p_o**2)/total_force_squared)))
         thermal_stresses.append(thermal_stress)
 # safety factors
 allowable_stresses = []
-Safety_pull_push = []
+
 mn = 1
 for h in materials:
     allowable_stresses.append(h[2:5])
+nm = 0
+nh = 0
 for j in allowable_stresses:
+    Safety_pull_push = []
     for i in pull_push_stresses:
-        SF1 = j[0] / i[0]
-        SF2 = j[0] / i[1]
+        SF1 = j[0] / (i[0])
+        SF2 = j[0] / (i[1])
         Safety_pull_push.append([SF1, SF2])
+        nh = nh + 1
     Safety_fastener = []
+    nh = 0
     for i in fastener_stresses:
-        SF1 = j[0] / i[0]
-        SF2 = j[1] / i[1]
+        SF1 = j[1] / (i[0])
+        SF2 = j[0] / (i[1])
         Safety_fastener.append([SF1, SF2])
     Safety_bearing = []
+    nh = 0
     for i in bearing_stresses:
-        SF = j[2]/i
+        SF = j[2]/(i)
         Safety_bearing.append(SF)
+        nh = nh + 1
+    nh = 0
     name = f"material{mn}"
     mn = mn + 1
+    nm = nm + 1
     print(f"{name}\n pull push : {Safety_pull_push}\n fasteners : {Safety_fastener}\n Bearing : {Safety_bearing}")
