@@ -4,16 +4,16 @@ import matplotlib.pyplot as plt
 
 #inputs
 
-p_axial = 1412
-p_tr = 142.2
-f_x = 284.3 / 2
-f_z = 328.4 / 2
+p_axial = 1907 /2
+p_tr = 1907 / 2 / 2
+f_x = 1907 / 2 / 2
+f_z = 4767 / 2 / 2
 material = "Aluminium 2014-T6"
 sigma_yield = 414 * ( 10 ** 6 )
 
 w = 2 * ( 10 ** (-2) )
 d = 1.3 * ( 10 ** (-2) )
-t = 0.14 * ( 10 ** (-2) )
+t = 0.3 * ( 10 ** (-2) )
 l = 3 * (10 ** (-2))
 h = 0.8 * ( 10 ** (-2) )
 
